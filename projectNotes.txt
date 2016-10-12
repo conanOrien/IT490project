@@ -1,0 +1,139 @@
+** INFO (10.9.2016) ** ::
+	This is a general document outlining the flow of our IT490 project.
+
+	I'm looking to notate the the entire process interaction between our webpage, script, and DB.
+
+	The goal here is to better outline our jobs so that we can lock in our focus.
+
+	I will also work to generate any variables that are needed within the code, so that they can be established in every portion consistently.
+
+
+- Program flow (admin page)
+	-Flight search
+		- Purpose:
+			- Users enter flight destination to find a list of flights without cargo assigned
+
+		- Function/Flow:
+			- HTML text input will be recorded into a var ($flightDest) and AJAX call is made to the php script
+		
+			- php script will query database for flights listed with matching destination and no cargo
+
+			- php script returns matching flight info in a multi level array
+				- return example: [[0123,01234,012,EWR,JFK,2016-10-9 00:00:00,2016-10-9 02:00:00,NULL], (etc. based on search results...)]
+
+			- Array parsed locally by webpage php, will load inline without changing pages
+
+
+	-Cargo seach
+		- Purpose:
+			- Users can enter cargo ID to find out which flight is carrying their cargo
+
+		- Function/Flow:
+			- HTML text input will be recorded into a var ($cargoID) and AJAX call is made to php script
+
+			- php script will query database for flight with matching cargo id
+
+			- php script returns an array with the matching flight info
+				- return example: [0123,01234,012,EWR,JFK,2016-10-9 00:00:00, 2016-10-9 02:00:00, 0123]
+
+			- Array parsed locally by php in webpage, will load inline without changing pages
+
+
+	-Login for Admin Users
+		- Purpose:
+			- Provide authentication and functionality for administrators of the web service
+
+		- Function/Flow:
+			- HTML text input fields will record admin username and password into vars ($uName) ($uPass) and AJAX call is made to php script
+
+			- php script will query user account database for matching username and password 
+				- passwords will be stored as hashes, lets use sha256 for the sake of industry standards
+
+				- Test with plaintext values first, then implement hashing security
+
+			- php script will return true if there is a hit, false if there is a miss
+
+			- HTML will echo an error if there is a miss, loads admin page if there is a hit
+
+
+	-Browse Crafts, crews, cargo, scheduled flights
+		- Purpose:
+			- Allow administrators to quickly view company resources and detailed information about them
+
+		- Function/Flow:
+			- HTML dropdown list on Nav Bar titled "Browse" which allows selection of Crafts, crews, cargo, flights
+				- Passes var based on which data should be displayed ($bCraft) ($bCrew) ($bCargo) ($bFlight)
+
+			- php queries the DB and returns an array of all values of requested type
+
+			- HTML loads page with a table that features all results
+				- **REACH GOAL** Each result is a link that makes an AJAX call to display all info about specific result
+
+
+	-Search any property of a flight and return flight information
+		- Purpose:
+			- Allow administrators to quickly pull up flight info regardless of what they know
+
+		- Function/Flow:
+			- HTML text field captures input from user in var $fSearch and executes php on submit
+				- JavaScript will change the name of the function called dynamically based on value entered
+
+			- php queries DB and returns an array of all the flight information for whichever flight hits
+				- must be php functions for each possible search, naming examples follow:
+					- searchFlightNum
+					- searchTailNum
+					- searchOrigin
+					- searchDest
+					- searchCargo
+					- searchCrew
+
+				- functions all do the same thing; search for a value in their specified column, return the entire row when hit occurs
+
+		
+	-Add/Edit/Delete aircraft, crews, cargo and flights from the system
+		- Purpose:
+			- Allow administrators to quickly and dynamically edit the shipping schedule
+
+		- Function/Flow:
+			- Admin functions link in Menu bar
+
+			- Radio button to select add or delete
+
+				- Deletion:
+					- Brings up dropdown selection for deletion
+
+					- Generates table of items with checkboxes to select candidates for deletion
+
+					- If cascade deletion will occur, warn user at selection and before submitting
+
+				- Addition:
+					- Brings up dropdown selection for addition
+
+					- Generates a form based on what is being added
+
+					- Calls php function that will add info from form as entry in DB
+						- Function name examples:
+							- addAircraft()
+							- etc...
+
+				- Editing:
+					- Load entire Flight table from DB
+
+					- HTML checkboxes next to each element in DB table
+
+					- Selecting an element generates editing form at bottom of page via Javascript
+
+					- submitting calls php function that edits given entry type
+						- Function name examples:
+							- editAircraft()
+							- etc...
+
+
+- Challenges/Concerns
+	- Add/Edit/Delete functions need to be further discussed
+
+	- Need to create a users table in DB
+
+	- Need to create php functions for each service
+
+	- TBC...
