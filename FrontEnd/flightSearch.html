@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="searchStyle.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<title>Airplanes R' Us</title>
+</head>
+<body class="body">
+	<header class="mainHeader">
+		<img src ="cloudsbanner.jpg">
+		<nav><ul>
+			<li class="active"><a href="userpage.html">Home</a></li>
+			<li><a href="cargoSearch.html">Cargo Search</a></li>
+			<li><a href="flightSearch.html">Flights Search</a></li>
+			<li><a href="#">Contact</a></li>
+			<li><a href="#">Logout</a></li>
+		</ul></nav>
+	</header>
+	
+	<div class="mainContent">
+		<div class="content">
+			<article class="topcontent">
+				<header>
+					<h2>Search by Flights</h2>
+				</header>
+				<content>
+					<form method="post" class="siteSearch" action="flightlookup.php">
+						<p>Flight Number:</p><input type="text" name="flightDest" placeholder="Search...">
+					</form>
+				</content>
+			</article>
+		</div>
+	</div>
+	
+	<footer class="mainFooter">
+		<p>Copyright &copy; <a href="#" title="Airplanes R' Us">Airplanes R' Us.com</a></p>
+	</footer>
+
+</body>
+
+</html>
