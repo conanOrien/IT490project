@@ -10,7 +10,7 @@
 </head>
 <body class="body">
 	<header class="mainHeader">
-		<img src ="cloudsbannerwords.png">
+		<img src ="cloudsbanner.jpg">
 		<nav><ul>
 			<li class="active"><a href="userpage.html">Home</a></li>
 			<li><a href="cargoSearch.html">Cargo Search</a></li>
@@ -27,8 +27,8 @@
 					<h2>Search by Flights</h2>
 				</header>
 				<content>
-					<form class="siteSearch">
-						<p>Flight Number:</p><input type="text" name="search" placeholder="Search...">
+					<form method="post" class="siteSearch" action="flightlookup.php">
+						<p>Flight Number:</p><input type="text" name="flightDest" placeholder="Search...">
 					</form>
 				</content>
 			</article>
