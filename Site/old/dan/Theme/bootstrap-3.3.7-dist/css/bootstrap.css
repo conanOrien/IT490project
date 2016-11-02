@@ -6431,9 +6431,6 @@ button.close {
 .carousel-caption .btn {
   text-shadow: none;
 }
-.top5{
-  margin-top:5%;
-}
 @media screen and (min-width: 768px) {
   .carousel-control .glyphicon-chevron-left,
   .carousel-control .glyphicon-chevron-right,
