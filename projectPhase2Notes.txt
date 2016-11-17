@@ -1,0 +1,63 @@
+- Goal of project phase 2
+	- Create an API that allows Overwhelmed commerce (Group A) to manipulate our Database
+
+
+- Tasks
+	- Hosting the API (Orion's working on this, will be done by Sunday 11/20)
+
+	- API Functions
+		- Flights view
+			- Verifies request via homebrew auth (i.e. basic username/pass check)
+			- Returns a message of success or failure for Group A to display on page
+			- Returns an HTML formatted table with results for Group A to display on page
+
+		- Adding Cargo
+			- Can recycle code from site, extend to include OrderNum
+			- Returns a message of success or failure for Group A to display on page
+
+		- Searching flight by order number
+			- Needs to create distinction between flights we added cargo to and they added cargo via API in drawn table
+			- Returns a message of success or failure for Group A to display on page
+			- Returns an HTML formatted table with results for Group A to display on page
+
+
+
+- Work Breakdown [In order of things that need to be done]		(Assigned to) : (Deadline)
+
+	- Establish the API service and functionality		 	(Orion) : (Finish by 11/20)
+		- Host the REST backend (However you choose to do this)
+		- Create a list of functions/parameters/output
+
+	- Extend the DB 						(Nick/Dan) : (Finish by 11/23)
+		- Add a column to cargo DB called OrderNum
+			- Not required, but exists
+	
+	- Create API functions 						(Everyone will work on this, effort as needed) : (Finish by 11/30)
+		- listed above
+
+	- Extend functionality of original site 			(Daniel D.) : (Finish by 11/30)
+		- Search by order number
+			- Extend current search function
+
+		- Differentiate DB entries added locally/remotely
+
+
+
+- Functions design
+	- Flight listing
+		- SEND: {uname:'uname', password:'hash'}
+		- Receive:{case:'success/fail', statusMsg:'You Succeeded/You didnt',flightTable:'htmlContainingFlightTable'}
+		
+		- Other cases: transmission error
+	
+	- Adding Cargo
+		- SEND: {cargo:'cargoType',cargoWeight:'cargoWeight',orderNum:'orderNum',flight:'flightNum'} 
+		- Receive: {case:'success/fail', statusMsg:'You Succeeded/You didnt'}
+	
+		- Other cases: transmission error
+
+	- Flight search by orderNum
+		- SEND: {orderNum:'orderNum'}
+		- Receive: {case:'success/fail', statusMsg:'You Succeeded/You didnt', flightTable:'htmlContainingFlightTable'}
+
+		- Other Cases: Transmission Error
