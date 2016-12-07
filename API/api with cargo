@@ -97,10 +97,12 @@ class addCargo(Resource):
 		caseMsg = 'Cargo was added to flight $flightnum!'
 		point = conn.cursor()
 
-		if request.form.get('type') == 'cr':
-			tailnumber = strip(request.form.get('tailnumber'))
-			type1 = strip(request.form.get('type1'))
-			fuelcount = strip(request.form.get('fuelcount'))
+      json_data = request.get_json()
+
+		if json_data.get('type') == 'cr':
+			tailnumber = strip(json_data.get('tailnumber'))
+			type1 = strip(json_data.get('type1'))
+			fuelcount = strip(json_data.get('fuelcount'))
 			sql = '''INSERT INTO aircraft_info 
 					  (TailNumber, Type, FuelCount)
 					  VALUES ({tailnumber}, {type1}, {fuelcount});'''
@@ -112,10 +114,10 @@ class addCargo(Resource):
 				case = 'Failure'
 				caseMsg = 'Cargo was unable to add'
 
-		if request.form.get('type') == 'cre':
-			crewid = strip(request.form.get('crewid'))
-			pilotname = strip(request.form.get('pilotname'))
-			navigatorname = strip(request.form.get('navigatorname'))
+		if json_data.get('type') == 'cre':
+			crewid = strip(json_data.get('crewid'))
+			pilotname = strip(json_data.get('pilotname'))
+			navigatorname = strip(json_data.get('navigatorname'))
 
 			sql = '''INSERT INTO aircrew (CrewID, PilotName, NavigatorName)
 				  VALUES ({crewid}, {pilotname}, {navigatorname});'''
@@ -127,10 +129,10 @@ class addCargo(Resource):
 				case = 'Failure'
 				caseMsg = 'Cargo was unable to add'
 
-		if request.form.get('type') == 'ca':
-			cargonumber = strip(request.form.get('cargonumber'))
-			weight = strip(request.form.get('weight'))
-			content = strip(request.form.get('content'))
+		if json_data.get('type') == 'ca':
+			cargonumber = strip(json_data.get('cargonumber'))
+			weight = strip(json_data.get('weight'))
+			content = strip(json_data.get('content'))
 	   
 			sql = '''INSERT INTO cargo (SkidNum, Weight, Content)
 				  VALUES ({cargonumber}, {weight}, {content});'''
@@ -141,18 +143,18 @@ class addCargo(Resource):
 				case = 'Failure'
 				caseMsg = 'Cargo was unable to add'
 
-		if request.form.get('type') == 'fl':
-			flightnum = strip(request.form.get('flightnum'))
-			tailnum = strip(request.form.get('tailnum'))
-			crewid = strip(request.form.get('crewid'))
-			departurefrom = strip(request.form.get('departurefrom'))
-			departureto = strip(request.form.get('departureto'))
-			departuretime = strip(request.form.get('departuretime'))
-			arrivaltime = strip(request.form.get('arrivaltime'))
-			if request.form.get('arrivaltime') == "null":
-				skidnum = None
+		if json_data.get('type') == 'fl':
+			flightnum = strip(json_data.get('flightnum'))
+			tailnum = strip(json_data.get('tailnum'))
+			crewid = strip(json_data.get('crewid'))
+			departurefrom = strip(json_data.get('departurefrom'))
+			departureto = strip(json_data.get('departureto'))
+			departuretime = strip(json_data.get('departuretime'))
+			arrivaltime = strip(json_data.get('arrivaltime'))
+			if json_data.get('arrivaltime') == "null":
+				skidnum = str(None)
 			else:
-				skidnum = strip(request.form.get('skidnum'))
+				skidnum = strip(json_data.get('skidnum'))
 				temp_departuretime = datetime.datetime.strptime(departuretime, "%d/%m/%Y %H:%M:%S")
 			temp_arrivaltime = datetime.datetime.strptime(arrivaltime, "%d-%m-%Y %H:%M:%S")
 			departuretime = time.mktime(temp_departuretime.timetuple())
