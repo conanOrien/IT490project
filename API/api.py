@@ -1,7 +1,9 @@
+import subprocess
 import mysql.connector
 from mysql.connector import errorcode
 from flask import Flask
 from flask_restful import Resource, Api, fields, marshal_with
+from time import sleep
 
 app = Flask(__name__)
 api = Api(app)
@@ -83,13 +85,25 @@ class searchFlight(Resource):
 
 		return {'case':'Success', 'caseMsg':'Query results loaded!', 'flightTable':'<b> THIS IS WHAT YOU SEARCHED FOR RIGHT???? </b>'}
 
+class syncDB(Resource):
+	def get(self):
+		sqlDump=subprocess.Popen('mysqldump -u backup dkl9>/tmp/dbDump.sql', shell=True, stderr=subprocess.PIPE)
+		sleep(0.1)
+		
+		sqlDump= open('/tmp/dbDump.sql', 'r').read()
+		dbData = {"Case":"Success", "db":str(sqlDump)}
 
+		subprocess.Popen('rm -f /tmp/dbDump.sql', shell=True, stderr=subprocess.PIPE)
+		return dbData
+
+		
 ##
 ## Function routing and domain definition
 ##
 api.add_resource(viewFlights, '/view')
 api.add_resource(addCargo, '/add')
 api.add_resource(searchFlight, '/search')
+api.add_resource(syncDB, '/sync')
 
 if __name__ == '__main__':
 	app.run(host='0.0.0.0')
